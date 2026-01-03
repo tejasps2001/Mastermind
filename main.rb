@@ -27,7 +27,7 @@ while breaker.guesses <= total_guesses
   # No need to exchange guess and feedback between the players
   # since they can be obtained from the board
   breaker.make_guess
-  breaker.pass_feedback
+  maker.pass_feedback
   user_won if breaker.win?
   # Codebreaker didn't win; loop again
 end
