@@ -24,9 +24,10 @@ puts 'I have a secret code ready! Now, try to guess it, kiddo!'
 
 while breaker.guesses <= total_guesses
   board.print_board
-  user_guess = breaker.guess
-  feedback = maker.pass_guess(user_guess)
-  breaker.pass_feedback(feedback)
+  # No need to exchange guess and feedback between the players
+  # since they can be obtained from the board
+  breaker.make_guess
+  breaker.pass_feedback
   user_won if breaker.win?
   # Codebreaker didn't win; loop again
 end
