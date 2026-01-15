@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 # Implementation of the Mastermind game
-# Algorithm of Donald Knuth
+# Algorithm from Donald Knuth
 
-require_relative 'lib/player'
+require_relative 'lib/board'
+require_relative 'lib/computer_player'
+require_relative 'lib/human_player'
 
 title =   '------------------M-A-S-T-E-R-M-I-N-D------------------'
 slogan =  '------------The classic code cracking game!------------'
@@ -22,6 +24,12 @@ puts slogan
 maker.generate_code
 puts 'I have a secret code ready! Now, try to guess it, kiddo!'
 
+def user_won
+  board.print_board
+  puts 'You won!'
+  exit 0
+end
+
 while breaker.guesses <= total_guesses
   board.print_board
   # No need to exchange guess and feedback between the players
@@ -33,8 +41,4 @@ while breaker.guesses <= total_guesses
 end
 
 puts "Sorry! You couldn't figure it out in time!"
-
-def user_won
-  puts 'You won!'
-  exit 0
-end
+puts "The code was #{board.secret_code}."

@@ -2,24 +2,30 @@
 
 # Player class
 class HumanPlayer
-  attr_accessor :guesses
-
   def initialize(board)
     @board = board
-    @guesses = 0
-    @past_guesses = []
   end
 
-  def guess
-    puts "Chance: #{@guess_no}"
+  def make_guess
+    guesses = @board.code_holes # ref
+    puts "Chance: #{@board.curr_guess_no + 1}"
+    @board.curr_guess_no += 1
     puts 'Guess the code: '
-    @curr_guess = gets.chomp
-    @past_guesses.append(@curr_guess)
-    @guesses += 1
-    @curr_guess
+    curr_guess = gets.chomp.split('')
+    guesses[@board.curr_guess_no] = curr_guess
   end
 
   def pass_feedback(feedback)
     # Nothing for this iteration
+  end
+
+  def win?
+    true if @board.key_holes[@board.curr_guess_no].all? do |feedback|
+      feedback == 'C'
+    end
+  end
+
+  def guesses
+    @board.curr_guess_no
   end
 end
