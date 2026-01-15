@@ -7,18 +7,18 @@ class ComputerPlayer
   end
 
   def generate_code
-    options = [1, 2, 3, 4, 5, 6]
+    options = ('1'..'6').to_a
     @board.secret_code = options.sample(4)
   end
 
   def pass_feedback
-    curr_feedback = @board.key_holes[@board.curr_guess] # ref
-    curr_guess_clone = @board.code_holes[@board.curr_guess].clone # new copy
+    curr_feedback = @board.key_holes[@board.curr_guess_no] # ref
+    curr_guess_clone = @board.code_holes[@board.curr_guess_no].clone # new copy
     secret_code = @board.secret_code.clone # new copy
     feedback_index = 0
 
     # Feedback with colored pegs
-    color_pegs(curr_feedback, curr_guess_clone, secret_code, feedback_index)
+    feedback_index = color_pegs(curr_feedback, curr_guess_clone, secret_code, feedback_index)
 
     # Get only those pegs which are in the solution but are incorrectly
     # placed
@@ -32,23 +32,30 @@ class ComputerPlayer
 
   def color_pegs(feedback, guess, secret_code, feedback_index)
     guess.each_index do |guess_index|
-      if guess[guess_index].eql?(secret_code[guess_index])
-        feedback[feedback_index] = 'C'
-        feedback_index += 1
-        guess[guess_index] = '-'
-        secret_code[guess_index] = '-'
-      end
+      next unless guess[guess_index].eql?(secret_code[guess_index])
+
+      # puts "#{guess[guess_index]} is same as #{secret_code[guess_index]}"
+      # puts 'So, giving a Colored peg.'
+      feedback[feedback_index] = 'C'
+      feedback_index += 1
+      guess[guess_index] = '-'
+      secret_code[guess_index] = '-'
+      # puts "Feedback index is #{feedback_index}"
     end
+    feedback_index
   end
 
   def white_pegs(feedback, guess, secret_code, feedback_index)
     guess.each do |guess|
       pos = secret_code.find_index(guess)
-      if pos
-        feedback[feedback_index] = 'w'
-        feedback_index += 1
-        secret_code[pos] = '-'
-      end
+      next unless pos
+
+      # puts "#{guess} is present at #{pos} position in #{secret_code}"
+      # puts 'So, giving a white peg'
+      feedback[feedback_index] = 'W'
+      feedback_index += 1
+      secret_code[pos] = '-'
+      # puts "Feedback index is #{feedback_index}"
     end
   end
 end
