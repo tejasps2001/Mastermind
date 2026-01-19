@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Player class
+# Human Codebreaker class
 class HumanPlayer
   def initialize(board)
     @board = board
