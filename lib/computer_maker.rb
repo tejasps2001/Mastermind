@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Computer Player class
+# Computer Codemaker class
 class ComputerMaker
   def initialize(board)
     @board = board
@@ -24,7 +24,7 @@ class ComputerMaker
     # Get only those pegs which are in the solution but are incorrectly
     # placed
     curr_guess_clone = curr_guess_clone.select do |guess|
-      guess.eql?('-') == false
+      next while guess.eql?('-')
     end
     # Feedback with white pegs
     white_pegs(curr_feedback, curr_guess_clone, secret_code, feedback_index)
