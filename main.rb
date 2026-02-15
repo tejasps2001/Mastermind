@@ -38,7 +38,7 @@ puts title
 puts slogan
 maker.generate_code
 
-def user_won
+def user_won(board)
   board.print_board
   puts 'You won!'
   exit 0
@@ -50,7 +50,7 @@ while breaker.guesses <= total_guesses
   # since they can be obtained from the board
   breaker.make_guess
   maker.pass_feedback
-  user_won if breaker.win?
+  user_won(board) if breaker.win?
   # Codebreaker didn't win; loop again
 end
 
